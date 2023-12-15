@@ -1,3 +1,7 @@
+import sys
+sys.path.append('')  # Adds the parent directory to the import path
+
+from app import app, db
 import unittest
 from app import app, db
 
