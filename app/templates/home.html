@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
+    <title>Home - WFH project</title>
+</head>
+<body>
+    <header>
+        <h1>Bienvenido</h1>
+    </header>
+
+    <main>
+        <section id="instructions">
+            <h2>¿Cómo clasificar los avisos de empleo?</h2>
+            <p>Sigue los siguientes pasos:</p>
+            <ol>
+                <li>Lee detenidamente los anuncios.</li>
+                <li>Determina si el anuncio se refiere a trabajo desde casa o no.</li>
+                <li>Selecciona la opción apropiada.</li>
+            </ol>
+        </section>
+
+        <section id="example">
+            <h2>Ejemplo</h2>
+            <p>Busco jóvenes de educacion superior para trabajo flexible con estudios. Se efectúa selección de personal por medio del envio de curriculum a partime@hotmail.cl. 
+                Posteriormente se cita a entrevista en la empresa con supervisor de area. Por tres horas semanales trabajadas en la empresa y cuatro horas <bold>de forma remota</bold>, 
+                el sueldo mensual es de $70.000.</p>
+            <h4>Este aviso lo clasificamos como WFH</h4>
+        </section>
+        <a href="{{ url_for('demo') }}">Aceptar y empezar</a>
+    </main>
+
+    <footer>
+        <p>Dudas: oscar.10000@hotmail.com</p>
+    </footer>
+</body>
+</html>
