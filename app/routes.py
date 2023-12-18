@@ -18,7 +18,7 @@ def submit_classifier():
     gender = request.form.get('gender')
     location = request.form.get('location')
 
-    new_classifier = Classifier(age=age, gender=gender, location=location)
+    new_classifier = Classifier(age=int(age), gender=gender, location=location)
     db.session.add(new_classifier)
     db.session.commit()
 
