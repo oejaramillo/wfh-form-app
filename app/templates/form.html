@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Form</title>
+</head>
+<body>
+    <form action="{{ url_for('submit') }}" method="post">
+        <input type="text" name="content" placeholder="Enter content">
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
