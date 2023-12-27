@@ -5,7 +5,9 @@
 </head>
 <body>
     <form action="{{ url_for('submit') }}" method="post">
-        <input type="text" name="content" placeholder="Enter content">
+        <input type="int" name="age" placeholder="Enter age">
+        <input type="text" name="gender" placeholder="Enter your gender">
+        <input type="location" name="location" placeholder="Enter your location">
         <button type="submit">Submit</button>
     </form>
 </body>

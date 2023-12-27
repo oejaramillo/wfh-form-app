@@ -1,5 +1,7 @@
 from app import db
 
-class Entry(db.Model):
+class Classifier(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String(200), nullable=False)
+    age = db.Column(db.Integer, nullable=False)
+    gender = db.Column(db.String(20), nullable=False)
+    location = db.Column(db.String(150), nullable=False)
