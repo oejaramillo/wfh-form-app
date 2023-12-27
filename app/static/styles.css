@@ -10,7 +10,7 @@ h1 {
     margin: 20px 0;
 }
 
-form {
+form, section {
     background-color: #fff;
     max-width: 600px;
     margin: 0 auto;
