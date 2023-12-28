@@ -29,6 +29,8 @@ function displayNextJobAd() {
 jobAdForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
+    displayNextJobAd();
+
     const classification = document.querySelector('input[name="classification"]:checked');
     if (!classification) {
         alert("Por favor selecciona una opción.");
@@ -38,7 +40,6 @@ jobAdForm.addEventListener("submit", function (e) {
     const currentAdKey = jobAdKeys[currentIndex - 1]; // Get the current ad's key
 
     const formData = {
-        classifier_id: someClassifierId, // Set this based on your application logic
         ad_id: currentAdKey,
         classification: classification.value,
     };
@@ -59,3 +60,6 @@ jobAdForm.addEventListener("submit", function (e) {
         console.error('Error:', error);
     });
 });
+
+// Initial display
+displayNextJobAd();

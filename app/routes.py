@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, session
+from flask import render_template, request, redirect, url_for, session, jsonify
 from app import app, db
 from app.models import Classifier
 from app.models import Classification
