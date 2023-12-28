@@ -2,7 +2,7 @@
 
 ## Overview
 
-The WFH Classification App is a web-based application designed to classify job advertisements as either suitable for working from home (WFH) or not. It allows users to review job ads and classify them, contributing to a dataset that could be used for various analytical purposes.
+The WFH Classification App is a web-based application designed to classify job advertisements as either suitable for working from home (WFH) or not. It allows users to review job ads and classify them, contributing to a dataset that could be used for various analytical purposes. This app was developed as part of the Project “Remote Work, Wages, and Competition: Disentangling demand and supply influences.”
 
 ## Architecture
 
