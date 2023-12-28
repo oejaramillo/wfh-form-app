@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css">
+    <title>Clasificación de anuncios</title>
+</head>
+<body>
+    <h1>Anuncios de empleo</h1>
+    <form id="jobAdForm" action="/submit_classification", method="post">
+        <div id="jobAdContainer"></div>
+        <div id="options">
+            <label>
+                <input type="radio" name="classification" value="WFH">Trabajo desde el hogar
+            </label>
+            <label>
+                <input type="radio" name="classification" value="Not WFH">No es trabajo desde el hogar
+            </label>
+        </div>
+
+        <!--Submit Button-->
+        <button type="submit">Enviar</button>
+    </form>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
