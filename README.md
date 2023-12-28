@@ -14,22 +14,20 @@ The application follows a typical Flask web application structure with a front-e
   - `__init__.py`: Initializes the Flask application and its configurations.
   - `app.py`: Contains the Flask application instance.
   - `config.py`: Configuration settings for the application.
-  - `models/`: Contains SQLAlchemy models.
-    - `classification.py`: Defines the Classification model.
-    - `classifier.py`: Defines the Classifier model.
+  - `models.py`: Contains SQLAlchemy models.
+    - `classification`: Defines the Classification model for storing the actual classification decision of human classifiers.
+    - `classifier`: Defines the Classifier model for storing data from the human classifers and mapping their classification
   - `routes.py`: Flask routes for handling web requests.
   - `static/`: Static files directory.
-    - `script.js`: JavaScript file for front-end interactivity.
+    - `script.js`: JavaScript file for front-end interactivity and server comunication with **AJAX** framework 
     - `styles.css`: CSS file for styling the application.
   - `templates/`: HTML templates for the application.
-    - `demo.html`: Template for the demo page.
-    - `home.html`: Home page template.
-    - `index.html`: Main classification interface.
+    - `inicio.html`: Home page template. 
+    - `datos_demo.html`: Template for the demographic form.
+    - `wfh_classification.html`: Main classification interface.
     - `last.html`: Final page after classification completion.
 - `init_db.py`: Script for initializing the database.
 - `requirements.txt`: List of Python dependencies for the application.
-- `testing/`: Contains tests for the application.
-  - `app_test.py`, `models_test.py`, `test_app.py`: Test scripts.
 
 ### Libraries and Technologies
 
@@ -47,4 +45,4 @@ The application serves as a tool for human classifiers to review and classify jo
 
 1. Install dependencies: `pip install -r requirements.txt`
 2. Initialize the database: `python init_db.py`
-3. Run the application: `python app/app.py`
+3. Run the application: `python run.py`
