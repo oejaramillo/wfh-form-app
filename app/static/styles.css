@@ -76,6 +76,7 @@ p {
 
 ol {
     list-style-type: disc;
+    text-align: left;
 }
 
 .our_criterion {

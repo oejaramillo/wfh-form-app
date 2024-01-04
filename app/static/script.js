@@ -12,39 +12,30 @@ const jobAdKeys = Object.keys(jobAds).map(key => parseInt(key));
 
 let currentIndex = 0;
 
-// Function to display the next job ad
+// Function to display the next job ad or redirect
 function displayNextJobAd() {
     if (currentIndex < jobAdKeys.length) {
         const currentAdKey = jobAdKeys[currentIndex];
         jobAdContainer.innerHTML = jobAds[currentAdKey];
-        currentIndex++;
     } else {
-        jobAdContainer.innerHTML = "Gracias por ayudarnos";
-        jobAdForm.style.display = "none";
+        // All ads have been classified, redirect to /despedida.html
+        window.location.href = '/despedida';
     }
 }
-
 
 // Event listener for form submission
 jobAdForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    displayNextJobAd();
-
     const classification = document.querySelector('input[name="classification"]:checked');
-    if (!classification) {
-        alert("Por favor selecciona una opción.");
-        return;
-    }
-
     const ease_of_coding = document.querySelector('input[name="ease_of_coding"]:checked');
-    if (!ease_of_coding) {
-        alert("Por favor indicanos la dificultad para la clasificación");
+
+    if (!classification || !ease_of_coding) {
+        alert("Por favor completa todas las selecciones.");
         return;
     }
 
-    const currentAdKey = jobAdKeys[currentIndex - 1]; // Get the current ad's key
-
+    const currentAdKey = jobAdKeys[currentIndex];
     const formData = {
         ad_id: currentAdKey,
         classification: classification.value,
@@ -61,7 +52,8 @@ jobAdForm.addEventListener("submit", function (e) {
     .then(response => response.json())
     .then(data => {
         console.log('Success:', data);
-        displayNextJobAd();  // Display the next job ad only after successful response
+        currentIndex++;  // Increment currentIndex after successful submission
+        displayNextJobAd();  // Display the next job ad or redirect
     })
     .catch((error) => {
         console.error('Error:', error);

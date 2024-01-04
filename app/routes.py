@@ -17,6 +17,10 @@ def datos_demo():
 def wfh_classification():
     return render_template('wfh_classification.html')
 
+@app.route('/despedida')
+def despedida():
+    return render_template('despedida.html')
+
 ## Routes for buttons _______________
 @app.route('/submit', methods=['POST'])
 def submit():
@@ -52,4 +56,6 @@ def submit_classification():
     db.session.add(new_classification)
     db.session.commit()
 
-    return jsonify({'status': 'success', 'message': 'Classification submitted successfully'})
+    return jsonify({'status': 'success', 
+                    'message': 'Classification submitted successfully',
+                    'redirect_url': url_for('despedida')})
