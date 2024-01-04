@@ -37,11 +37,18 @@ jobAdForm.addEventListener("submit", function (e) {
         return;
     }
 
+    const ease_of_coding = document.querySelector('input[name="ease_of_coding"]:checked');
+    if (!ease_of_coding) {
+        alert("Por favor indicanos la dificultad para la clasificación");
+        return;
+    }
+
     const currentAdKey = jobAdKeys[currentIndex - 1]; // Get the current ad's key
 
     const formData = {
         ad_id: currentAdKey,
         classification: classification.value,
+        ease_of_coding: ease_of_coding.value,
     };
 
     fetch('/submit_classification', {

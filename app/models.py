@@ -12,6 +12,7 @@ class Classification(db.Model):
     classifier_id = db.Column(db.Integer, db.ForeignKey('classifier.id'), nullable=False)
     ad_id = db.Column(db.Integer, nullable=False)
     classification = db.Column(db.String(50), nullable=False)
+    ease = db.Column(db.String(7), nullable=False)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
     classifier = db.relationship('Classifier', backref=db.backref('classifications', lazy=True))

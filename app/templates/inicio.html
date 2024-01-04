@@ -12,6 +12,46 @@
     </header>
 
     <main>
+        <section id="background">
+            <h2>Contexto</h2>
+            <p class="background">Estamos estudiando la incidencia del trabajo desde casa utilizando el texto de millones de anuncios de trabajo en línea.
+                Los anuncios de trabajo tienen mucha información que puede ser usada para diferentes tipos de investigaciones.</p>
+            <p>Para realizar esta tarea necesitamos tu ayuda que nos servira para mejorar nuestra actual medición del trabajo desde casa!</p>
+        </section>
+
+        <section id="overview">
+            <h2>Visión general de la codificación para trabajo desde casa</h2>
+            <p class="overview">Necesitamos que leas los anuncios de trabajo y determines si el anuncio implica <strong>trabajar desde casa</strong>. El desafío es que trabajar desde casa se conoce con muchos nombres:</p>
+            <ol>
+                <li>trabajar desde casa</li>
+                <li>Work from home (a veces los anuncios en español pueden incluir esta u otras expresiones en inglés)</li>
+                <li>trabajo remoto</li>
+                <li>teletrabajo</li>
+                <li>trabajar desde cualquier lugar</li>
+                <li>trabajo híbrido</li>
+                <li>completamente remoto</li>
+                <li>trabajar virtualmente</li>
+                <li>y otras relacionadas</li>
+            </ol>
+            <p class="overview">Algunos de estos términos también pueden referirse a trabajos que no implican trabajar desde casa.</p>
+            <ol>
+                <li>Un vendedor ambulante que debe trabajar desde cualquier lugar</li>
+                <li>Trabajos estacionales que implican unos meses en casa sin trabajar y otros meses de trabajo en la agricultura o minas</li>
+                <li>Trabajos 100% virtuales pero que pueden requerir ir a una oficina física como atención al cliente</li>
+            </ol>
+        </section>
+
+        <section id="criterion">
+            <h2>Nuestro Criterio para clasificar trabajo desde casa</h2>
+            <p class="criterion">Si el anuncio indica que el trabajo permite o requiere trabajar desde casa al menos un día completo por semana, lo clasificamos como <strong>Trabajo desde casa</strong></p>
+            <ol>
+                <li><strong>Trabajo desde casa completo:</strong> El trabajo se realiza únicamente desde el hogar</li>
+                <li><strong>Trabajo desde casa temporal:</strong> El trabajo se realizará en casa durante 2 meses, luego se trasladará a una oficina compartida.</li>
+                <li><strong>Trabajo desde casa parcial:</strong> El trabajo se realiza desde el hogar 1 o más días por semana y el resto en las instalaciones del empleador</li>
+            </ol>                     
+            <p class="our_criterion"> Todas estas clasificaciones son <strong>Trabajo desde el hogar</strong> según nuestro criterio</p>
+        </section>
+
         <section id="instructions">
             <h2>¿Cómo clasificar los avisos de empleo?</h2>
             <p class="pasos">Sigue los siguientes pasos:</p>
@@ -29,6 +69,16 @@
                 el sueldo mensual es de $70.000.</p>
             <h4>Este aviso lo clasificamos como WFH</h4>
         </section>
+
+        <section id="ease_of_coding">
+            <h2>¿Te resulto dificil clasificar?</h2>
+            <ol>
+                <li><span class="easy">Fácil:</span> Toma un par de segundos decidir si el anuncio es trabajo desde casa, es claro y obvio.</li>
+                <li><span class="medium">Medio:</span> Toma un poco más de tiempo no es inmediatamente claro.</li>
+                <li><span class="hard">Dificil:</span> Requirió consideración, no estaba claro la clasificación del anuncio.</li>
+            </ol>
+        </section>
+
         <section>
             <button type="aceptar"><a href="{{ url_for('datos_demo')}}">Aceptar</a></button>
         </section>

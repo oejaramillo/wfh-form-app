@@ -45,6 +45,7 @@ def submit_classification():
         classifier_id=classifier_id,
         ad_id=data['ad_id'],
         classification=data['classification'],
+        ease=data['ease_of_coding'],
         timestamp=datetime.utcnow()
     )
 
