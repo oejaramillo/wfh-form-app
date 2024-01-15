@@ -3,6 +3,7 @@ from app import app, db
 from app.models import Classifier
 from app.models import Classification
 from datetime import datetime
+from flask import flash
 
 ## Template renders ______
 @app.route('/')
@@ -21,19 +22,32 @@ def wfh_classification():
 def despedida():
     return render_template('despedida.html')
 
-## Routes for buttons _______________
+@app.route('/continue_classification', methods=['POST'])
+def continue_classification():
+    return render_template('continuar.html')
+
+@app.route('/submit_mail', methods=['POST'])
+def submit_mail():
+    return redirect(url_for('wfh_classification'))
+
+## Routes for buttons ______________________________________________________
 @app.route('/submit', methods=['POST'])
 def submit():
     age = request.form.get('age')
     gender = request.form.get('gender')
     location = request.form.get('location')
+    email = request.form.get('email')
 
-    new_classifier = Classifier(age=int(age), gender=gender, location=location)
+    existing_classifier = Classifier.query.filter_by(email=email).first()
+    if existing_classifier:
+        flash('Email already exists. You are already a classifier.', 'error')
+        return redirect(url_for('datos_demo'))
+
+    new_classifier = Classifier(age=int(age), gender=gender, location=location, email=email)
     db.session.add(new_classifier)
     db.session.commit()
 
     session['classifier_id'] = new_classifier.id  # Store the new classifier's ID in the session
-
     return redirect(url_for('wfh_classification'))
 
 

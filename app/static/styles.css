@@ -98,6 +98,21 @@ ol {
     font-weight: bold;
 }
 
+.alert {
+    color: red;
+    background-color: #ffdddd;
+    border-left: 6px solid #f44336;
+    margin: 10px 0;
+    padding: 15px;
+    position: fixed; 
+    left: 0;
+    right: 0;
+    z-index: 1000; 
+    text-align: center;
+}
+
+
+
 @media (max-width: 600px) {
     form {
         padding: 10px;

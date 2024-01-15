@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
+    <title>Continue page</title>
+</head>
+<body>
+    <h1>¿Continuar la clasificación?</h1>
+    <section>
+        <p>Continua desde donde lo dejaste</p>
+    </section>
+    <form action="{{ url_for('submit_mail') }}" method="post">
+        <div>
+            <label for="email">Correo electrónico</label>
+            <input type="email" id="email" name="email" placeholder="juanjimenez@ejemplo.com" required>
+        </div>
+        <button type="submit">Continuar desde donde lo deje</button>
+    </form>
+</body>
+</html>

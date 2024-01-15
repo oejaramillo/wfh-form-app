@@ -7,6 +7,14 @@
     <title>Classifiers Data Form</title>
 </head>
 <body>
+    <!-- Display flash messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert {{ category }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
     <h1>Información demográfica</h1>
     <section>
         <p>Con fines investigativos necesitamos reunir algunos datos tuyos, no es necesario datos de contacto o de identificacion</p>
@@ -28,7 +36,14 @@
             <label for="location">Región</label>
             <input type="text" id="location" name="location" placeholder="Región...">
         </div>
+        <div>
+            <label for="email">Correo electrónico</label>
+            <input type="email" id="email" name="email" placeholder="juanjimenez@ejemplo.com" required>
+        </div>        
         <button type="submit">Enviar y continuar</button>
+    </form>
+    <form action="{{ url_for('continue_classification') }}" method="post">
+        <button type="submit">Continuar desde donde lo deje</button>
     </form>
 </body>
 </html>
