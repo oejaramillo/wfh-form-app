@@ -7,6 +7,8 @@ class Classifier(db.Model):
     gender = db.Column(db.String(20), nullable=False)
     location = db.Column(db.String(150), nullable=False)
     email = db.Column(db.String(120), nullable=False, unique=True)
+    adsGroup = db.Column(db.Integer, nullable=False)
+    adCount = db.Column(db.Integer, nullable=False, default=0)
 
 class Classification(db.Model):
     id = db.Column(db.Integer, primary_key=True)

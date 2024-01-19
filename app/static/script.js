@@ -1,22 +1,30 @@
-const jobAds = {
-    0: "Anuncio de ejemplo 1 WFH",
-    1: "Anuncio de ejemplo 2 not WFH",
-    2: "Anuncio de ejemplo 3 not WFH",
-    3: "Anuncio de ejemplo 4 not WFH"
-};
+let jobAds = [];
+let jobAdKeys = [];
+let currentIndex = 0;
 
 const jobAdContainer = document.getElementById("jobAdContainer");
 const jobAdForm = document.getElementById("jobAdForm");
 
-const jobAdKeys = Object.keys(jobAds).map(key => parseInt(key));
+function fetchAds() {
+    fetch('/get_ads')
+    .then(response => response.json())
+    .then(data => {
+        jobAds = data;
+        console.log("Loaded ads:", jobAds); // Debugging
+        displayNextJobAd();
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
 
-let currentIndex = 0;
+fetchAds();
 
-// Function to display the next job ad or redirect
 function displayNextJobAd() {
-    if (currentIndex < jobAdKeys.length) {
-        const currentAdKey = jobAdKeys[currentIndex];
-        jobAdContainer.innerHTML = jobAds[currentAdKey];
+    console.log("Current index:", currentIndex, "Total ads:", jobAds.length); // Debugging
+    if (currentIndex <= jobAds.length) {
+        const currentAd = jobAds[currentIndex];
+        jobAdContainer.innerHTML = currentAd.aviso;
     } else {
         // All ads have been classified, redirect to /despedida.html
         window.location.href = '/despedida';
