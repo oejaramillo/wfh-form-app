@@ -22,18 +22,27 @@ fetchAds();
 
 function displayNextJobAd() {
     console.log("Current index:", currentIndex, "Total ads:", jobAds.length); // Debugging
-    if (currentIndex <= jobAds.length) {
+    if (currentIndex < jobAds.length) {
         const currentAd = jobAds[currentIndex];
-        jobAdContainer.innerHTML = currentAd.aviso;
+        jobAdContainer.innerHTML = currentAd.aviso; // Display the ad text
+        // Optionally, use currentAd.id as needed
+        currentIndex++;
     } else {
-        // All ads have been classified, redirect to /despedida.html
         window.location.href = '/despedida';
     }
 }
 
+
 // Event listener for form submission
 jobAdForm.addEventListener("submit", function (e) {
     e.preventDefault();
+
+    // Check if there are more ads to classify
+    if (currentIndex >= jobAds.length) {
+        // Handle the case where all ads have been classified
+        window.location.href = '/despedida';
+        return;
+    }
 
     const classification = document.querySelector('input[name="classification"]:checked');
     const ease_of_coding = document.querySelector('input[name="ease_of_coding"]:checked');
@@ -43,9 +52,11 @@ jobAdForm.addEventListener("submit", function (e) {
         return;
     }
 
-    const currentAdKey = jobAdKeys[currentIndex];
+    // Get the ID of the current ad being classified
+    const currentAd = jobAds[currentIndex];
+
     const formData = {
-        ad_id: currentAdKey,
+        ad_id: currentAd.id,
         classification: classification.value,
         ease_of_coding: ease_of_coding.value,
     };
@@ -60,7 +71,7 @@ jobAdForm.addEventListener("submit", function (e) {
     .then(response => response.json())
     .then(data => {
         console.log('Success:', data);
-        currentIndex++;  // Increment currentIndex after successful submission
+        //currentIndex++;  // Increment currentIndex after successful submission
         displayNextJobAd();  // Display the next job ad or redirect
     })
     .catch((error) => {
@@ -68,5 +79,7 @@ jobAdForm.addEventListener("submit", function (e) {
     });
 });
 
+
+
 // Initial display
-displayNextJobAd();
+//displayNextJobAd();

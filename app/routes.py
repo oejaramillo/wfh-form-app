@@ -5,7 +5,8 @@ from app.models import Classification
 from datetime import datetime
 from flask import flash
 import random
-
+import json
+   
 ## Template renders ______
 @app.route('/')
 def inicio():
@@ -37,7 +38,7 @@ def submit():
 
     existing_classifier = Classifier.query.filter_by(email=email).first()
     if existing_classifier:
-        flash('Email already exists. You are already a classifier.', 'error')
+        flash('El correo ya existe, por favor ingresa a Continuar desde donde lo dejaste.', 'error')
         return redirect(url_for('datos_demo'))
 
     ads_groups = ["1", "2", "3", "4", "5"]  # Assuming these are your group IDs
@@ -52,61 +53,23 @@ def submit():
 
 @app.route('/get_ads')
 def get_ads():
-    try:
-        classifier_id = session.get('classifier_id')
-        if classifier_id:
-            classifier = Classifier.query.get(classifier_id)
-            if not classifier:
-                return jsonify({'error': 'Classifier not found'}), 404
+    classifier_id = session.get('classifier_id')
+    if classifier_id:
+        classifier = Classifier.query.get(classifier_id)
+        ads_group = classifier.adsGroup
+        ad_count = classifier.adCount
 
-            ads_group = classifier.adsGroup
-            ad_count = classifier.adCount
-            data = {
-                "1": [
-                    {"id": 1, "aviso": "Este es el aviso 1.1"},
-                    {"id": 2, "aviso": "Este es el aviso 1.2"},
-                    {"id": 3, "aviso": "Este es el aviso 1.3"},
-                    {"id": 4, "aviso": "Este es el aviso 1.4"},
-                    {"id": 5, "aviso": "Este es el aviso 1.5"}
-                ],
-                "2": [
-                    {"id": 1, "aviso": "Este es el aviso 2.1"},
-                    {"id": 2, "aviso": "Este es el aviso 2.2"},
-                    {"id": 3, "aviso": "Este es el aviso 2.3"},
-                    {"id": 4, "aviso": "Este es el aviso 2.4"},
-                    {"id": 5, "aviso": "Este es el aviso 2.5"}
-                ],
-                "3": [
-                    {"id": 1, "aviso": "Este es el aviso 3.1"},
-                    {"id": 2, "aviso": "Este es el aviso 3.2"},
-                    {"id": 3, "aviso": "Este es el aviso 3.3"},
-                    {"id": 4, "aviso": "Este es el aviso 3.4"},
-                    {"id": 5, "aviso": "Este es el aviso 3.5"}
-                ],
-                "4": [
-                    {"id": 1, "aviso": "Este es el aviso 4.1"},
-                    {"id": 2, "aviso": "Este es el aviso 4.2"},
-                    {"id": 3, "aviso": "Este es el aviso 4.3"},
-                    {"id": 4, "aviso": "Este es el aviso 4.4"},
-                    {"id": 5, "aviso": "Este es el aviso 4.5"}
-                ],
-                "5": [
-                    {"id": 1, "aviso": "Este es el aviso 5.1"},
-                    {"id": 2, "aviso": "Este es el aviso 5.2"},
-                    {"id": 3, "aviso": "Este es el aviso 5.3"},
-                    {"id": 4, "aviso": "Este es el aviso 5.4"},
-                    {"id": 5, "aviso": "Este es el aviso 5.5"}
-                ]
-            }
+        with open('jobads2.json', 'r') as archive:
+            all_ads = json.load(archive)
 
-            remaining_ads = data[str(ads_group)][ad_count:]
-            return jsonify(remaining_ads)
+        # Create a list of objects with id and aviso
+        remaining_ads = [{"id": ad_id, "aviso": ad_text} 
+                         for ad_id, ad_text in all_ads[str(ads_group)].items()][ad_count:]
 
-        return jsonify({'error': 'Classifier ID not in session'}), 404
-    except Exception as e:
-        # Log the exception
-        print("Error in get_ads route:", e)
-        return jsonify({'error': 'Internal Server Error'}), 500
+        return jsonify(remaining_ads)
+
+    return jsonify({'error': 'Classifier not found'}), 404
+
 
 @app.route('/submit_classification', methods=['POST'])
 def submit_classification():
@@ -146,5 +109,5 @@ def submit_mail():
         session['classifier_id'] = classifier.id
         return redirect(url_for('wfh_classification'))
     else:
-        flash('No classifier found with that email.', 'error')
+        flash('Tu correo no esta registrado, por favor ingresa tus datos', 'error')
         return redirect(url_for('datos_demo'))  # Replace 'continue_page' with the correct route name
