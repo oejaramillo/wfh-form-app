@@ -40,7 +40,8 @@ def submit():
     if existing_classifier:
         flash('El correo ya existe, por favor ingresa a Continuar desde donde lo dejaste.', 'error')
         return redirect(url_for('datos_demo'))
-
+    
+    # Here we should change the list of the first level keys of the JSON data
     ads_groups = ["1", "2", "3", "4", "5"]  # Assuming these are your group IDs
     assigned_group = random.choice(ads_groups)
 
