@@ -10,3 +10,4 @@ instance
 ads.json
 secret.py
 deploy
+.venv
