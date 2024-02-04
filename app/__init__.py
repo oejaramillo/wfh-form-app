@@ -5,9 +5,14 @@ from flask_migrate import Migrate
 
 app = Flask(__name__)
 
-#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
+# Get the DATABASE_URL, replace "postgres://" with "postgresql://" due to heroku
+database_url = os.environ.get("DATABASE_URL")
+if database_url.startswith("postgress://"):
+    database_url = database_url.replace("postgress://", "postgresql://", 1)
+    
+app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
