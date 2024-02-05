@@ -77,6 +77,12 @@ jobAdForm.addEventListener("submit", function (e) {
     .catch((error) => {
         console.error('Error:', error);
     });
+
+    // Reset radio button selections
+    const radioButtons = document.querySelectorAll('input[type="radio"]');
+    radioButtons.forEach(button => {
+        button.checked = false;
+    });
 });
 
 

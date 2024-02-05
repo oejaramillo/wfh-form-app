@@ -42,7 +42,7 @@ def submit():
         return redirect(url_for('datos_demo'))
     
     # Here we should change the list of the first level keys of the JSON data
-    ads_groups = ["1", "2", "3", "4", "5"]  # Assuming these are your group IDs
+    ads_groups = ["0", "1", "2", "3", "4"]  # Assuming these are your group IDs
     assigned_group = random.choice(ads_groups)
 
     new_classifier = Classifier(age=int(age), gender=gender, location=location, email=email, adsGroup=assigned_group, adCount=0)
