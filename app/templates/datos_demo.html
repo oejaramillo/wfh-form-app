@@ -27,14 +27,38 @@
         <div>
             <label for="gender">Género</label>
             <select id="gender" name="gender" required>
+                <option value="disabled_selected" hidden></option>
                 <option value="Masculino">Masculino</option>
                 <option value="Femenino">Femenino</option>
                 <option value="Otro">Otro</option>
             </select>
         </div>
         <div>
-            <label for="location">Región</label>
-            <input type="text" id="location" name="location" placeholder="Santiago">
+            <label for="location">Comuna</label>
+            <select id="location" name="location" required>
+                <option value="disabled_selected" hidden></option>
+                <option value="1l">Location_1</option>
+                <option value="2l">Location_2</option>
+                <option value="3l">Location_3</option>
+            </select>
+        </div>
+        <div>
+            <label for="institution">Institución</label>
+            <select id="institution" name="institution" required>
+                <option value="disabled_selected" hidden></option>
+                <option value="1">Institution_1</option>
+                <option value="2">Institution_2</option>
+                <option value="3">Institution_3</option>
+            </select>
+        </div>
+        <div>
+            <label for="study_field">Área de estudio</label>
+            <select id="study_field" name="study_field" required>
+                <option value="disabled_selected" hidden></option>
+                <option value="1s">study_field_1</option>
+                <option value="2s">study_field_2</option>
+                <option value="3s">study_field_3</option>
+            </select>
         </div>
         <div>
             <label for="email">Correo electrónico</label>

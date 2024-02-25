@@ -34,18 +34,28 @@ def submit():
     age = request.form.get('age')
     gender = request.form.get('gender')
     location = request.form.get('location')
+    institution = request.form.get('institution')
+    study_field = request.form.get('study_field')
     email = request.form.get('email')
 
     existing_classifier = Classifier.query.filter_by(email=email).first()
     if existing_classifier:
-        flash('El correo ya existe, por favor ingresa a Continuar desde donde lo dejaste.', 'error')
-        return redirect(url_for('datos_demo'))
+        flash('El correo ya existe, por favor continua desde donde lo dejaste.', 'error')
+        return redirect(url_for('continuar'))
     
     # Here we should change the list of the first level keys of the JSON data
     ads_groups = ["0", "1", "2", "3", "4"]  # Assuming these are your group IDs
     assigned_group = random.choice(ads_groups)
 
-    new_classifier = Classifier(age=int(age), gender=gender, location=location, email=email, adsGroup=assigned_group, adCount=0)
+    new_classifier = Classifier(
+        age=int(age), 
+        gender=gender, 
+        location=location, 
+        institution= institution,
+        study_field=study_field,
+        email=email, 
+        adsGroup=assigned_group, 
+        adCount=0 )
     db.session.add(new_classifier)
     db.session.commit()
 
