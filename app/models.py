@@ -7,8 +7,8 @@ class Classifier(db.Model):
     gender = db.Column(db.String(20), nullable=False)
     location = db.Column(db.String(150), nullable=False)
     email = db.Column(db.String(120), nullable=False, unique=True)
-    institution = db.Column(db.String(120), nullable=False)
-    study_field = db.Column(db.String(120), nullable=False)
+    institution = db.Column(db.String(150), nullable=False)
+    study_field = db.Column(db.String(150), nullable=False)
     adsGroup = db.Column(db.Integer, nullable=False)
     adCount = db.Column(db.Integer, nullable=False, default=0)
 
