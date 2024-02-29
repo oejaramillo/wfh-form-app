@@ -24,6 +24,18 @@ form, section {
     margin-right: 10px;
 }
 
+#institution {
+    width: 250px; /* Or any fixed width */
+    overflow: hidden; /* Prevents text from overflowing */
+}
+
+#institution option {
+    width: auto; /* Allows option to be wider than select */
+    white-space: nowrap; /* Prevents text from wrapping */
+    overflow: hidden; /* Hide text overflow */
+    text-overflow: ellipsis; /* Add ellipsis to text that overflows */
+}
+
 #ease_of_coding label {
     display: inline-block;
     margin-right: 10px;
