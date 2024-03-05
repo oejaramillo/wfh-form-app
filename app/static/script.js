@@ -1,6 +1,7 @@
 let jobAds = [];
+let totalAds = 0;
+let classifiedAds = 0;
 let jobAdKeys = [];
-let currentIndex = 0;
 
 const jobAdContainer = document.getElementById("jobAdContainer");
 const jobAdForm = document.getElementById("jobAdForm");
@@ -9,9 +10,16 @@ function fetchAds() {
     fetch('/get_ads')
     .then(response => response.json())
     .then(data => {
-        jobAds = data;
+        jobAds = data.remaining_ads;
+        totalAds = data.total_ads;
+        classifiedAds = data.ads_classified;
         console.log("Loaded ads:", jobAds); // Debugging
-        displayNextJobAd();
+        console.log("Total ads:", totalAds); // Debugging
+
+
+        //update progress bar
+        updateProgressBar(classifiedAds, totalAds);
+        displayNextJobAd()
     })
     .catch(error => {
         console.error('Error:', error);
@@ -20,25 +28,33 @@ function fetchAds() {
 
 fetchAds();
 
+function updateProgressBar(adsClassified, totalAds) {
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
+    
+    const progressPercentage = (adsClassified / totalAds) * 100;
+    progressBar.style.width = progressPercentage + '%';
+    progressText.innerText = `${adsClassified} de ${totalAds} anuncios clasificados`;
+
+}
+
 function displayNextJobAd() {
-    console.log("Current index:", currentIndex, "Total ads:", jobAds.length); // Debugging
-    if (currentIndex < jobAds.length) {
-        const currentAd = jobAds[currentIndex];
+    console.log("jobAds.length:", jobAds.length, "totalAds:", totalAds, "classified:", classifiedAds); // Debugging
+    if (classifiedAds < totalAds) {
+        const currentAd = jobAds[0];
         jobAdContainer.innerHTML = currentAd.aviso; // Display the ad text
         // Optionally, use currentAd.id as needed
-        currentIndex++;
     } else {
         window.location.href = '/despedida';
     }
 }
-
 
 // Event listener for form submission
 jobAdForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
     // Check if there are more ads to classify
-    if (currentIndex >= jobAds.length) {
+    if (classifiedAds >= totalAds) {
         // Handle the case where all ads have been classified
         window.location.href = '/despedida';
         return;
@@ -53,7 +69,7 @@ jobAdForm.addEventListener("submit", function (e) {
     }
 
     // Get the ID of the current ad being classified
-    const currentAd = jobAds[currentIndex];
+    const currentAd = jobAds[0];
 
     const formData = {
         ad_id: currentAd.id,
@@ -72,7 +88,7 @@ jobAdForm.addEventListener("submit", function (e) {
     .then(data => {
         console.log('Success:', data);
         //currentIndex++;  // Increment currentIndex after successful submission
-        displayNextJobAd();  // Display the next job ad or redirect
+        fetchAds();
     })
     .catch((error) => {
         console.error('Error:', error);

@@ -123,6 +123,28 @@ ol {
     text-align: center;
 }
 
+.progress-container {
+    width: 30%;
+    background-color: #eee;
+    margin: 20px auto;
+    display: block;
+}
+
+.progress-bar {
+    height: 20px;
+    background-color: #4CAF50;
+    width: 0%; /* Initial width */
+    transition: width 0.4s ease;
+}
+
+.progress {
+    height: 100%;
+}
+
+#progressText {
+    text-align: center;
+}
+
 
 
 @media (max-width: 600px) {

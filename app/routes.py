@@ -77,7 +77,14 @@ def get_ads():
         remaining_ads = [{"id": ad_id, "aviso": ad_text} 
                          for ad_id, ad_text in all_ads[str(ads_group)].items()][ad_count:]
 
-        return jsonify(remaining_ads)
+        response = jsonify({
+            'remaining_ads': remaining_ads,
+            'total_ads': len(all_ads[str(ads_group)]),
+            'ads_classified': ad_count
+            })
+        print(response)
+        print("total ads ", len(all_ads[str(ads_group)]))
+        return response
 
     return jsonify({'error': 'Classifier not found'}), 404
 
