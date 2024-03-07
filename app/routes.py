@@ -1,11 +1,21 @@
-from flask import render_template, request, redirect, url_for, session, jsonify
-from app import app, db
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify, current_app
+from app import app, db, mail
 from app.models import Classifier
 from app.models import Classification
+from app.models import TempClassifier
 from datetime import datetime
 from flask import flash
+from itsdangerous import URLSafeTimedSerializer as Serializer
+from flask_mail import Message, Mail
 import random
 import json
+from itsdangerous import URLSafeTimedSerializer as Serializer
+from flask import current_app
+
+def generate_verification_token(email):
+    serializer = Serializer(current_app.config['SECRET_KEY'], salt='email-verify')
+    token = serializer.dumps(email, salt='email-verify')
+    return token
    
 ## Template renders ______
 @app.route('/')
@@ -31,36 +41,27 @@ def continue_classification():
 ## Routes for buttons ______________________________________________________
 @app.route('/submit', methods=['POST'])
 def submit():
-    age = request.form.get('age')
-    gender = request.form.get('gender')
-    location = request.form.get('location')
-    institution = request.form.get('institution')
-    study_field = request.form.get('study_field')
-    email = request.form.get('email')
-
-    existing_classifier = Classifier.query.filter_by(email=email).first()
-    if existing_classifier:
-        flash('El correo ya existe, por favor continua desde donde lo dejaste.', 'error')
-        return redirect(url_for('continuar'))
+    temp_classifier = TempClassifier(
+        age = request.form.get('age'),
+        gender = request.form.get('gender'),
+        location = request.form.get('location'),
+        institution = request.form.get('institution'),
+        study_field = request.form.get('study_field'),
+        email = request.form.get('email')
+    )
     
-    # Here we should change the list of the first level keys of the JSON data
-    ads_groups = ["0", "1", "2", "3", "4"]  # Assuming these are your group IDs
-    assigned_group = random.choice(ads_groups)
+    existing_temp = TempClassifier.query.filter_by(email=temp_classifier.email).first()
+    existing_classifier = Classifier.query.filter_by(email=temp_classifier.email).first()
+    if existing_temp or existing_classifier:
+        flash('El correo ya existe, por favor continua desde donde lo dejaste.', 'error')
 
-    new_classifier = Classifier(
-        age=int(age), 
-        gender=gender, 
-        location=location, 
-        institution= institution,
-        study_field=study_field,
-        email=email, 
-        adsGroup=assigned_group, 
-        adCount=0 )
-    db.session.add(new_classifier)
+    db.session.add(temp_classifier)
     db.session.commit()
 
-    session['classifier_id'] = new_classifier.id  # Store the new classifier's ID in the session
-    return redirect(url_for('wfh_classification'))
+    session['temp_id'] = temp_classifier.id
+
+    # redirect to email verification process
+    return redirect(url_for('register', email=temp_classifier.email))
 
 @app.route('/get_ads')
 def get_ads():
@@ -129,3 +130,68 @@ def submit_mail():
     else:
         flash('Tu correo no esta registrado, por favor ingresa tus datos', 'error')
         return redirect(url_for('datos_demo'))  # Replace 'continue_page' with the correct route name
+    
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    temp_id = session.get('temp_id')
+    temp_classifier = TempClassifier.query.filter_by(id=temp_id).first()
+
+    if temp_classifier and temp_classifier.email:  # Check if email is not empty
+        token = generate_verification_token(temp_classifier.email)
+
+        # Send verification email
+        verify_url = url_for('verify_email', token=token, _external=True)
+        msg = Message("Por favor verifica tu correo electronico", recipients=[temp_classifier.email])
+        msg.body = f'Tu codigo de verificacion es {verify_url}'
+        try:
+            mail.send(msg)
+            print(msg)
+        except Exception as e:
+            print(f"Fallo al enviar correo: {e}")
+    else:
+        flash('Por favor ingresa un correo electronico.', 'error')
+        return redirect(url_for('register'))
+
+    # For GET requests, or if POST request but email is empty
+    # Assuming you have a template named 'register.html' for the registration form
+    return render_template('register.html')
+    
+@app.route('/verify_email/<token>')
+def verify_email(token):
+    serializer = Serializer(current_app.config['FLASK_SECRET_KEY'], salt='email-verify')
+    try:
+        email = serializer.loads(token, salt='email-verify', max_age=3600) # una hora
+        temp_classifier = TempClassifier.query.filter_by(email=email).first_or_404()
+
+        # Transfer data from temp classifier to the actual classifier
+        ads_groups = ["0", "1", "2", "3", "4"]  # Assuming these are your group IDs
+        assigned_group = random.choice(ads_groups)
+
+        new_classifier = Classifier(
+            age=int(temp_classifier.age),
+            gender=temp_classifier.gender,
+            location=temp_classifier.location,
+            institution=temp_classifier.institution,
+            study_field=temp_classifier.study_field,
+            email=temp_classifier.email,
+            adsGroup=assigned_group,
+            adCount=0 
+        )
+
+        db.session.add(new_classifier)
+        db.session.delete(temp_classifier)
+        db.session.commit()
+
+        session['classifier_id'] = new_classifier.id  # Store the new classifier's ID in the session
+
+        # Podemos redirigir
+        return redirect(url_for('wfh_classification'))
+    except:
+        return 'El codigo de verificacion caduco.', 400
+
+
+ # Here we should change the list of the first level keys of the JSON data
+    
+
+    
+   

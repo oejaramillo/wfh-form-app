@@ -12,6 +12,16 @@ class Classifier(db.Model):
     adsGroup = db.Column(db.Integer, nullable=False)
     adCount = db.Column(db.Integer, nullable=False, default=0)
 
+class TempClassifier(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    age = db.Column(db.Integer)
+    gender = db.Column(db.String(20))
+    email = db.Column(db.String(100), unique=True)
+    location = db.Column(db.String(150))
+    institution = db.Column(db.String(150))
+    study_field = db.Column(db.String(150))    
+    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
+
 class Classification(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     classifier_id = db.Column(db.Integer, db.ForeignKey('classifier.id'), nullable=False)
