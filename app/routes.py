@@ -52,16 +52,18 @@ def submit():
     
     existing_temp = TempClassifier.query.filter_by(email=temp_classifier.email).first()
     existing_classifier = Classifier.query.filter_by(email=temp_classifier.email).first()
+
     if existing_temp or existing_classifier:
         flash('El correo ya existe, por favor continua desde donde lo dejaste.', 'error')
+        return redirect(url_for('datos_demo'))
+    else:
+        db.session.add(temp_classifier)
+        db.session.commit()
 
-    db.session.add(temp_classifier)
-    db.session.commit()
+        session['temp_id'] = temp_classifier.id
 
-    session['temp_id'] = temp_classifier.id
-
-    # redirect to email verification process
-    return redirect(url_for('register', email=temp_classifier.email))
+        # redirect to email verification process
+        return redirect(url_for('register', email=temp_classifier.email))
 
 @app.route('/get_ads')
 def get_ads():
@@ -115,9 +117,28 @@ def submit_classification():
         classifier.adCount += 1
         db.session.commit()
 
+        # Check classifications are finished
+        TOTAL_CLASSIFICATIONS = 8
+        if classifier.adCount >= TOTAL_CLASSIFICATIONS:
+            send_email(classifier.email)
+    
     return jsonify({'status': 'success', 
                     'message': 'Classification submitted successfully',
                     'redirect_url': url_for('despedida')})
+
+def send_email(email):
+    subject = "Gracias por participar"
+    sender = app.config['MAIL_DEFAULT_SENDER']
+    recipients = [email]
+    body = "Gracias por ayudar en el proyecto"
+
+    msg = Message(subject, sender=sender, recipients=recipients, body=body)
+
+    try:
+        mail.send(msg)
+    except Exception as e:
+        app.logger.error(f"Fallo al enviar el corre: {e}")
+
 
 @app.route('/submit_mail', methods=['POST'])
 def submit_mail():
@@ -142,7 +163,7 @@ def register():
         # Send verification email
         verify_url = url_for('verify_email', token=token, _external=True)
         msg = Message("Por favor verifica tu correo electronico", recipients=[temp_classifier.email])
-        msg.body = f'Tu codigo de verificacion es {verify_url}'
+        msg.body = f'El link de verificacion es: {verify_url}'
         try:
             mail.send(msg)
             print(msg)
@@ -158,7 +179,7 @@ def register():
     
 @app.route('/verify_email/<token>')
 def verify_email(token):
-    serializer = Serializer(current_app.config['FLASK_SECRET_KEY'], salt='email-verify')
+    serializer = Serializer(current_app.config['SECRET_KEY'], salt='email-verify')
     try:
         email = serializer.loads(token, salt='email-verify', max_age=3600) # una hora
         temp_classifier = TempClassifier.query.filter_by(email=email).first_or_404()
