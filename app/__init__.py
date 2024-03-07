@@ -14,7 +14,7 @@ app = Flask(__name__)
 # app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
-app.config['SECRET_KEY'] = 'zV6XtQrUAVyL2htcmhjY'
+app.config['SECRET_KEY'] = ''
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -23,7 +23,7 @@ app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = 'wfh.project.2024@gmail.com'
-app.config['MAIL_PASSWORD'] = 'VySMQ6hL06RscJXJqYpp'
+app.config['MAIL_PASSWORD'] = ''
 app.config['MAIL_DEFAULT_SENDER'] = 'wfh.project.2024@gmail.com'
 
 mail = Mail(app)
