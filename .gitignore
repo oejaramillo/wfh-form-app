@@ -12,3 +12,4 @@ secret.py
 deploy
 .venv
 amb
+env_var.txt

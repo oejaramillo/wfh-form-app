@@ -1,16 +1,13 @@
-from flask import Flask, render_template, request, redirect, url_for, session, jsonify, current_app
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify, current_app, flash
 from app import app, db, mail
 from app.models import Classifier
 from app.models import Classification
 from app.models import TempClassifier
 from datetime import datetime
-from flask import flash
 from itsdangerous import URLSafeTimedSerializer as Serializer
 from flask_mail import Message, Mail
 import random
 import json
-from itsdangerous import URLSafeTimedSerializer as Serializer
-from flask import current_app
 
 def generate_verification_token(email):
     serializer = Serializer(current_app.config['SECRET_KEY'], salt='email-verify')
@@ -118,7 +115,7 @@ def submit_classification():
         db.session.commit()
 
         # Check classifications are finished
-        TOTAL_CLASSIFICATIONS = 8
+        TOTAL_CLASSIFICATIONS = 8       # THIS NUMBER should be updated each time with the amount of ads
         if classifier.adCount >= TOTAL_CLASSIFICATIONS:
             send_email(classifier.email)
     
@@ -150,7 +147,7 @@ def submit_mail():
         return redirect(url_for('wfh_classification'))
     else:
         flash('Tu correo no esta registrado, por favor ingresa tus datos', 'error')
-        return redirect(url_for('datos_demo'))  # Replace 'continue_page' with the correct route name
+        return redirect(url_for('datos_demo'))  
     
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -185,7 +182,7 @@ def verify_email(token):
         temp_classifier = TempClassifier.query.filter_by(email=email).first_or_404()
 
         # Transfer data from temp classifier to the actual classifier
-        ads_groups = ["0", "1", "2", "3", "4"]  # Assuming these are your group IDs
+        ads_groups = ["0", "1", "2", "3", "4"]  # THIS list should also be updated with the actual count of ads displayed
         assigned_group = random.choice(ads_groups)
 
         new_classifier = Classifier(
@@ -208,10 +205,7 @@ def verify_email(token):
         # Podemos redirigir
         return redirect(url_for('wfh_classification'))
     except:
-        return 'El codigo de verificacion caduco.', 400
-
-
- # Here we should change the list of the first level keys of the JSON data
+        return redirect(url_for('datos_demo')) 
     
 
     
