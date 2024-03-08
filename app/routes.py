@@ -178,7 +178,7 @@ def register():
 def verify_email(token):
     serializer = Serializer(current_app.config['SECRET_KEY'], salt='email-verify')
     try:
-        email = serializer.loads(token, salt='email-verify', max_age=3600) # una hora
+        email = serializer.loads(token, salt='email-verify', max_age=20000) # una hora
         temp_classifier = TempClassifier.query.filter_by(email=email).first_or_404()
 
         # Transfer data from temp classifier to the actual classifier
