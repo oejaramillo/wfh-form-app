@@ -205,7 +205,7 @@ def verify_email(token):
         # Podemos redirigir
         return redirect(url_for('wfh_classification'))
     except:
-        return redirect(url_for('datos_demo')) 
+        return 'Link caducado', 404
     
 
     
