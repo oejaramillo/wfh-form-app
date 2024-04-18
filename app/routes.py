@@ -102,6 +102,7 @@ def submit_classification():
         ad_id=data['ad_id'],
         classification=data['classification'],
         ease=data['ease_of_coding'],
+        workday=data['working_day'],
         timestamp=datetime.utcnow()
     )
 
@@ -181,6 +182,7 @@ def verify_email(token):
         email = serializer.loads(token, salt='email-verify', max_age=20000) # una hora
         temp_classifier = TempClassifier.query.filter_by(email=email).first_or_404()
 
+        # W have to revisit this, it will be better a queue to avoid replacement problems
         # Transfer data from temp classifier to the actual classifier
         ads_groups = ["0", "1", "2", "3", "4"]  # THIS list should also be updated with the actual count of ads displayed
         assigned_group = random.choice(ads_groups)

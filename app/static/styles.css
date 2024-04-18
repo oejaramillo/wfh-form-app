@@ -36,12 +36,12 @@ form, section {
     text-overflow: ellipsis; /* Add ellipsis to text that overflows */
 }
 
-#ease_of_coding label {
+#ease_of_coding label, #working_day label {
     display: inline-block;
     margin-right: 10px;
 }
 
-#options, #ease_of_coding {
+#options, #ease_of_coding, #working_day {
     text-align: center;
 }
 
