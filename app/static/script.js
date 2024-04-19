@@ -13,8 +13,10 @@ function fetchAds() {
         jobAds = data.remaining_ads;
         totalAds = data.total_ads;
         classifiedAds = data.ads_classified;
+        adoptions = data.ad_options;
         console.log("Loaded ads:", jobAds); // Debugging
         console.log("Total ads:", totalAds); // Debugging
+        console.log("Ad options:", adoptions); // Debugging
 
 
         //update progress bar
@@ -43,7 +45,16 @@ function displayNextJobAd() {
     if (classifiedAds < totalAds) {
         const currentAd = jobAds[0];
         jobAdContainer.innerHTML = currentAd.aviso; // Display the ad text
-        // Optionally, use currentAd.id as needed
+        
+        // Here we want to update dinamycally the order of the options
+        const optionsContainer = document.getElementById('options');
+        const radioOptions = optionsContainer.querySelectorAll('input[type="radio"]');
+
+        if (adoptions === 0) {
+            // if adoptions is 0 show "No se menciona trabajo desde el hogar" first
+            optionsContainer.insertBefore(radioOptions[1].parentNode, radioOptions[0].parentNode.nextSibling);
+        }
+
     } else {
         window.location.href = '/despedida';
     }

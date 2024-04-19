@@ -69,6 +69,7 @@ def get_ads():
         classifier = Classifier.query.get(classifier_id)
         ads_group = classifier.adsGroup
         ad_count = classifier.adCount
+        ad_options = classifier.adoptions
 
         with open('jobads2.json', 'r') as archive:
             all_ads = json.load(archive)
@@ -80,7 +81,8 @@ def get_ads():
         response = jsonify({
             'remaining_ads': remaining_ads,
             'total_ads': len(all_ads[str(ads_group)]),
-            'ads_classified': ad_count
+            'ads_classified': ad_count,
+            'ad_options':ad_options 
             })
         print(response)
         print("total ads ", len(all_ads[str(ads_group)]))
@@ -172,7 +174,6 @@ def register():
         return redirect(url_for('register'))
 
     # For GET requests, or if POST request but email is empty
-    # Assuming you have a template named 'register.html' for the registration form
     return render_template('register.html')
     
 @app.route('/verify_email/<token>')
@@ -182,10 +183,13 @@ def verify_email(token):
         email = serializer.loads(token, salt='email-verify', max_age=20000) # una hora
         temp_classifier = TempClassifier.query.filter_by(email=email).first_or_404()
 
-        # W have to revisit this, it will be better a queue to avoid replacement problems
+        # We have to revisit this, it will be better a queue to avoid replacement problems
         # Transfer data from temp classifier to the actual classifier
         ads_groups = ["0", "1", "2", "3", "4"]  # THIS list should also be updated with the actual count of ads displayed
         assigned_group = random.choice(ads_groups)
+
+        # We need to define the random order of the wfh options per user 0 or 1
+        adoptions = round(random.random())
 
         new_classifier = Classifier(
             age=int(temp_classifier.age),
@@ -195,7 +199,8 @@ def verify_email(token):
             study_field=temp_classifier.study_field,
             email=temp_classifier.email,
             adsGroup=assigned_group,
-            adCount=0 
+            adCount=0,
+            adoptions=adoptions 
         )
 
         db.session.add(new_classifier)

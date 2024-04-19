@@ -11,6 +11,7 @@ class Classifier(db.Model):
     study_field = db.Column(db.String(150), nullable=False)
     adsGroup = db.Column(db.Integer, nullable=False)
     adCount = db.Column(db.Integer, nullable=False, default=0)
+    adoptions = db.Column(db.Integer, nullable=False)
 
 class TempClassifier(db.Model):
     id = db.Column(db.Integer, primary_key=True)
