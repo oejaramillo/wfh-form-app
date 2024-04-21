@@ -183,14 +183,13 @@ def verify_email(token):
     serializer = Serializer(current_app.config['SECRET_KEY'], salt='email-verify')
     try:
         # We want to handle timezone information to avoid expiration time issues
-        email, expiration_time = serializer.loads_with_expiration(token, salt='email-verify') 
-
-        # Convert expiration time to UTC
-        expiration_time_utc = expiration_time.astimezone(pytz.utc)
+        email, expiration_time = serializer.loads(token, salt='email-verify') 
 
         # Check if the token has expired
-        if datetime.utcnow() > expiration_time_utc:
-            return 'Link caducado: Token expired', 404
+        if 'expiration' in email:
+            expiration_time = datetime.strptime(email['expiration'], '%Y-%m-%d %H:%M:%S.%f')
+            if datetime.utcnow() > expiration_time:
+                return 'Link caducado: Token expired', 404
         
         # Log token information for debugging
         app.logger.info(f"Token verified for email: {email}")
