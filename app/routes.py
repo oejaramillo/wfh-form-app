@@ -6,6 +6,8 @@ from app.models import TempClassifier
 from datetime import datetime
 from itsdangerous import URLSafeTimedSerializer as Serializer
 from flask_mail import Message, Mail
+from datetime import datetime, timedelta
+import pytz
 import random
 import json
 
@@ -180,10 +182,15 @@ def register():
 def verify_email(token):
     serializer = Serializer(current_app.config['SECRET_KEY'], salt='email-verify')
     try:
-        email = serializer.loads(token, salt='email-verify', max_age=200000) # una hora
+        # we want to handle timezone information to avoid expiration time issues
+        email, expiration_time = serializer.loads_with_expiration(token, salt='email-verify') 
 
-        # Add some logging or print statements for debugging
-        print("Token loaded successfully for email:", email)
+        # convert expiration time to UTC
+        expiration_time_utc = expiration_time.astimezone(pytz.utc)
+
+        # Check if the token has expired
+        if datetime.utcnow() > expiration_time_utc:
+            return 'Link caducado', 404
         
         temp_classifier = TempClassifier.query.filter_by(email=email).first_or_404()
 
