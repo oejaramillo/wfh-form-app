@@ -47,14 +47,32 @@ function displayNextJobAd() {
         jobAdContainer.innerHTML = currentAd.aviso; // Display the ad text
         
         // Here we want to update dinamycally the order of the options
-        const optionsContainer = document.getElementById('options');
-        const radioOptions = optionsContainer.querySelectorAll('input[type="radio"]');
+        var optionsContainer = document.getElementById('options');
+        
+        // Get the radio buttons
+        var radioButtons = `
+            <label>
+                <input type="radio" name="classification" value="WFH">Se menciona trabajo desde el hogar
+            </label>
+            <label>
+                <input type="radio" name="classification" value="Not WFH">No se menciona trabajo desde el hogar
+            </label>
+            `;
 
-        if (adoptions === 0) {
-            // if adoptions is 0 show "No se menciona trabajo desde el hogar" first
-            optionsContainer.insertBefore(radioOptions[1].parentNode, radioOptions[0].parentNode.nextSibling);
+        if (adoptions === 1) {
+            optionsContainer.innerHTML = radioButtons; // Keep the order, WFH first
+
+        } else if (adoptions === 0) {
+            optionsContainer.innerHTML = `
+            <label>
+                <input type="radio" name="classification" value="Not WFH">No se menciona trabajo desde el hogar
+            </label>
+            <label>
+                <input type="radio" name="classification" value="WFH">Se menciona trabajo desde el hogar
+            </label>
+            `;
         }
-
+        
     } else {
         window.location.href = '/despedida';
     }
