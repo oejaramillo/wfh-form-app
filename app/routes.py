@@ -182,16 +182,21 @@ def register():
 def verify_email(token):
     serializer = Serializer(current_app.config['SECRET_KEY'], salt='email-verify')
     try:
-        # we want to handle timezone information to avoid expiration time issues
+        # We want to handle timezone information to avoid expiration time issues
         email, expiration_time = serializer.loads_with_expiration(token, salt='email-verify') 
 
-        # convert expiration time to UTC
+        # Convert expiration time to UTC
         expiration_time_utc = expiration_time.astimezone(pytz.utc)
 
         # Check if the token has expired
         if datetime.utcnow() > expiration_time_utc:
-            return 'Link caducado', 404
+            return 'Link caducado: Token expired', 404
         
+        # Log token information for debugging
+        app.logger.info(f"Token verified for email: {email}")
+        app.logger.info(f"Token expiration time: {expiration_time_utc}")
+        app.logger.info(f"Current UTC time: {datetime.utcnow()}")
+
         temp_classifier = TempClassifier.query.filter_by(email=email).first_or_404()
 
         # We have to revisit this, it will be better a queue to avoid replacement problems
@@ -222,9 +227,15 @@ def verify_email(token):
 
         # Podemos redirigir
         return redirect(url_for('wfh_classification'))
-    except:
-        return 'Link caducado', 404
-    
+    except BadSignature:
+        return 'Link caducado: Invalid token', 404
+    except SignatureExpired:
+        return 'Link caducado: Token expired', 404
+    except Exception as e:
+        # Log any unexpected exceptions for debugging
+        app.logger.error(f"An error occurred: {e}")
+        return 'Error: Something went wrong', 500
+
 
     
    
