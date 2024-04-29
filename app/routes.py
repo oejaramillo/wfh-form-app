@@ -5,6 +5,7 @@ from app.models import Classification
 from app.models import TempClassifier
 from datetime import datetime
 from itsdangerous import URLSafeTimedSerializer as Serializer
+from itsdangerous import BadSignature, SignatureExpired
 from flask_mail import Message, Mail
 from datetime import datetime, timedelta
 import pytz
@@ -182,20 +183,11 @@ def register():
 def verify_email(token):
     serializer = Serializer(current_app.config['SECRET_KEY'], salt='email-verify')
     try:
-        # We want to handle timezone information to avoid expiration time issues
-        email, expiration_time = serializer.loads(token, salt='email-verify') 
+        # DEsearialize the token and extract email information
+        email = serializer.loads(token, salt='email-verify', max_age=48*60*60) 
 
-        # Check if the token has expired
-        if 'expiration' in email:
-            expiration_time = datetime.strptime(email['expiration'], '%Y-%m-%d %H:%M:%S.%f')
-            if datetime.utcnow() > expiration_time:
-                return 'Link caducado: Token expired', 404
+        # Here we can implement maybe some logic to manage the age time        def calculate_max_age(issued_time):
         
-        # Log token information for debugging
-        app.logger.info(f"Token verified for email: {email}")
-        app.logger.info(f"Token expiration time: {expiration_time_utc}")
-        app.logger.info(f"Current UTC time: {datetime.utcnow()}")
-
         temp_classifier = TempClassifier.query.filter_by(email=email).first_or_404()
 
         # We have to revisit this, it will be better a queue to avoid replacement problems
@@ -222,10 +214,11 @@ def verify_email(token):
         db.session.delete(temp_classifier)
         db.session.commit()
 
-        session['classifier_id'] = new_classifier.id  # Store the new classifier's ID in the session
 
+        session['classifier_id'] = new_classifier.id  # Store the new classifier's ID in the session
         # Podemos redirigir
         return redirect(url_for('wfh_classification'))
+    
     except BadSignature:
         return 'Link caducado: Invalid token', 404
     except SignatureExpired:
