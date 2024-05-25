@@ -74,12 +74,12 @@ def get_ads():
         ad_count = classifier.adCount
         ad_options = classifier.adoptions
 
-        with open('jobads2.json', 'r') as archive:
+        with open('jobads3.json', 'r') as archive:
             all_ads = json.load(archive)
 
         # Create a list of objects with id and aviso
-        remaining_ads = [{"id": ad_id, "aviso": ad_text} 
-                         for ad_id, ad_text in all_ads[str(ads_group)].items()][ad_count:]
+        remaining_ads = [{"id": ad_id, "aviso": ad_list} 
+                         for ad_id, ad_list in all_ads[str(ads_group)].items()][ad_count:]
 
         response = jsonify({
             'remaining_ads': remaining_ads,

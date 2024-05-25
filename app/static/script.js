@@ -43,8 +43,32 @@ function updateProgressBar(adsClassified, totalAds) {
 function displayNextJobAd() {
     console.log("jobAds.length:", jobAds.length, "totalAds:", totalAds, "classified:", classifiedAds); // Debugging
     if (classifiedAds < totalAds) {
-        const currentAd = jobAds[0];
-        jobAdContainer.innerHTML = currentAd.aviso; // Display the ad text
+        const currentAd = jobAds[0];  // the actual ad
+        // inside the list of the ad, retreive all the text
+        console.log(currentAd)
+        const avisocargo = currentAd.aviso[0];
+        const avisocuerpo = currentAd.aviso[1];
+        const disponibilidadnombre = currentAd.aviso[2];
+        const avisorequisitos = currentAd.aviso[3];
+        const avisolugartrabajo = currentAd.aviso[4];
+        jobAdContainer.innerHTML = `
+            <div>
+                <h4>Título: </h4><p>${avisocargo}</p>
+            </div>
+            <div>
+                <h4>Anuncio: </h4>
+                <p>${avisocuerpo}</p>
+            </div>
+            <div>
+                <h4>Disponibilidad: </h4><p>${disponibilidadnombre}</p>
+            </div>
+            <div>
+                <h4>Requisitos: </h4>
+                <p>${avisorequisitos}</p>
+            </div>
+            <div>
+                <h4>Lugar/Ubicación: </h4><p>${avisolugartrabajo}</p>
+            </div>`// Display the ad text
         
         // Here we want to update dinamycally the order of the options
         var optionsContainer = document.getElementById('options');
@@ -131,8 +155,6 @@ jobAdForm.addEventListener("submit", function (e) {
         button.checked = false;
     });
 });
-
-
 
 // Initial display
 //displayNextJobAd();
