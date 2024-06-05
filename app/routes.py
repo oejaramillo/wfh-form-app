@@ -140,7 +140,7 @@ def send_email(email):
     try:
         mail.send(msg)
     except Exception as e:
-        app.logger.error(f"Fallo al enviar el corre: {e}")
+        app.logger.error(f"Fallo al enviar el correo: {e}")
 
 
 @app.route('/submit_mail', methods=['POST'])
@@ -186,7 +186,7 @@ def verify_email(token):
         # DEsearialize the token and extract email information
         email = serializer.loads(token, salt='email-verify', max_age=48*60*60) 
 
-        # Here we can implement maybe some logic to manage the age time        def calculate_max_age(issued_time):
+        # Here we can implement maybe some logic to manage the age time def calculate_max_age(issued_time):
         
         temp_classifier = TempClassifier.query.filter_by(email=email).first_or_404()
 
