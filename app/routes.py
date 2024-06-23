@@ -220,7 +220,7 @@ def verify_email(token):
         session['classifier_id'] = new_classifier.id  # Store the new classifier's ID in the session
         # Podemos redirigir
         
-        redirect(url_for('wfh_classification'))
+        return redirect(url_for('wfh_classification'))
     
     except BadSignature:
         return 'Link caducado: Invalid token', 404

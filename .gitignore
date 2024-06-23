@@ -13,3 +13,4 @@ deploy
 .venv
 amb
 env_var.txt
+set_env.sh
