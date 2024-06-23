@@ -188,7 +188,7 @@ def verify_email(token):
 
         print("Email verificado de forma exitosa")
 
-        # Here we can implement maybe some logic to manage the age time        def calculate_max_age(issued_time):
+        # Here we can implement maybe some logic to manage the age time def calculate_max_age(issued_time):
         
         temp_classifier = TempClassifier.query.filter_by(email=email).first_or_404()
 
@@ -219,7 +219,8 @@ def verify_email(token):
         print("We are here")
         session['classifier_id'] = new_classifier.id  # Store the new classifier's ID in the session
         # Podemos redirigir
-        return redirect(url_for('despedida'))
+        
+        redirect(url_for('wfh_classification'))
     
     except BadSignature:
         return 'Link caducado: Invalid token', 404
