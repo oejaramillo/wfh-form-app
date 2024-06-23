@@ -216,10 +216,10 @@ def verify_email(token):
         db.session.delete(temp_classifier)
         db.session.commit()
 
-
+        print("We are here")
         session['classifier_id'] = new_classifier.id  # Store the new classifier's ID in the session
         # Podemos redirigir
-        return redirect(url_for('wfh_classification'))
+        return redirect(url_for('despedida'))
     
     except BadSignature:
         return 'Link caducado: Invalid token', 404
