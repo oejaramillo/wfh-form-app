@@ -140,7 +140,7 @@ def send_email(email):
     try:
         mail.send(msg)
     except Exception as e:
-        app.logger.error(f"Fallo al enviar el corre: {e}")
+        app.logger.error(f"Fallo al enviar el correo: {e}")
 
 
 @app.route('/submit_mail', methods=['POST'])
@@ -169,7 +169,7 @@ def register():
         msg.body = f'El link de verificacion es: {verify_url}'
         try:
             mail.send(msg)
-            print(msg)
+            print("Email enviado con éxito")
         except Exception as e:
             print(f"Fallo al enviar correo: {e}")
     else:
@@ -185,6 +185,8 @@ def verify_email(token):
     try:
         # DEsearialize the token and extract email information
         email = serializer.loads(token, salt='email-verify', max_age=48*60*60) 
+
+        print("Email verificado de forma exitosa")
 
         # Here we can implement maybe some logic to manage the age time        def calculate_max_age(issued_time):
         
