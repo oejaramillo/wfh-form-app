@@ -183,7 +183,7 @@ def register():
 def verify_email(token):
     serializer = Serializer(current_app.config['SECRET_KEY'], salt='email-verify')
     try:
-        # DEsearialize the token and extract email information
+        # Desearialize the token and extract email information
         email = serializer.loads(token, salt='email-verify', max_age=48*60*60) 
         
         temp_classifier = TempClassifier.query.filter_by(email=email).first_or_404()
@@ -192,7 +192,7 @@ def verify_email(token):
         number_classifiers = Classifier.query.count()
 
         # How many groups are available
-        total_groups = 4
+        total_groups = 4        # This is neccesary to update with the actual number of groups to be classified
         
         # Assign a group based on the current number of classifiers
         assigned_group = str(number_classifiers % total_groups)
