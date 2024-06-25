@@ -185,15 +185,17 @@ def verify_email(token):
     try:
         # DEsearialize the token and extract email information
         email = serializer.loads(token, salt='email-verify', max_age=48*60*60) 
-
-        # Here we can implement maybe some logic to manage the age time        def calculate_max_age(issued_time):
         
         temp_classifier = TempClassifier.query.filter_by(email=email).first_or_404()
 
-        # We have to revisit this, it will be better a queue to avoid replacement problems
-        # Transfer data from temp classifier to the actual classifier
-        ads_groups = ["0", "1", "2", "3", "4"]  # THIS list should also be updated with the actual count of ads displayed
-        assigned_group = random.choice(ads_groups)
+        # How many classifiers are on the database
+        number_classifiers = Classifier.query.count()
+
+        # How many groups are available
+        total_groups = 4
+        
+        # Assign a group based on the current number of classifiers
+        assigned_group = str(number_classifiers % total_groups)
 
         # We need to define the random order of the wfh options per user 0 or 1
         adoptions = round(random.random())
