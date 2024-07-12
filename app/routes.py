@@ -74,7 +74,7 @@ def get_ads():
         ad_count = classifier.adCount
         ad_options = classifier.adoptions
 
-        with open('jobads3.json', 'r') as archive:
+        with open('jobads5.json', 'r') as archive:
             all_ads = json.load(archive)
 
         # Create a list of objects with id and aviso
@@ -121,26 +121,26 @@ def submit_classification():
         db.session.commit()
 
         # Check classifications are finished
-        TOTAL_CLASSIFICATIONS = 8       # THIS NUMBER should be updated each time with the amount of ads
+        TOTAL_CLASSIFICATIONS = 160     # THIS NUMBER should be updated each time with the amount of ads
         if classifier.adCount >= TOTAL_CLASSIFICATIONS:
             send_email(classifier.email)
     
     return jsonify({'status': 'success', 
-                    'message': 'Classification submitted successfully',
+                    'message': 'Las clasificaciones han sido recibidas de forma satisfactoria, gracias por la participación, recibirán más información por correo electrónico.',
                     'redirect_url': url_for('despedida')})
 
 def send_email(email):
     subject = "Gracias por participar"
     sender = app.config['MAIL_DEFAULT_SENDER']
     recipients = [email]
-    body = "Gracias por ayudar en el proyecto"
+    body = "Gracias por ayudar en el proyecto, las clasificaciones se han recibido de forma exitosa, recibirán más información por correo electrónico"
 
     msg = Message(subject, sender=sender, recipients=recipients, body=body)
 
     try:
         mail.send(msg)
     except Exception as e:
-        app.logger.error(f"Fallo al enviar el corre: {e}")
+        app.logger.error(f"Fallo al enviar el correo: {e}")
 
 
 @app.route('/submit_mail', methods=['POST'])
@@ -192,7 +192,7 @@ def verify_email(token):
         number_classifiers = Classifier.query.count()
 
         # How many groups are available
-        total_groups = 4        # This is neccesary to update with the actual number of groups to be classified
+        total_groups = 50        # This is neccesary to update with the actual number of groups to be classified
         
         # Assign a group based on the current number of classifiers
         assigned_group = str(number_classifiers % total_groups)
