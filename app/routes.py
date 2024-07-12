@@ -74,7 +74,7 @@ def get_ads():
         ad_count = classifier.adCount
         ad_options = classifier.adoptions
 
-        with open('jobads3.json', 'r') as archive:
+        with open('jobads5.json', 'r') as archive:
             all_ads = json.load(archive)
 
         # Create a list of objects with id and aviso
@@ -121,26 +121,26 @@ def submit_classification():
         db.session.commit()
 
         # Check classifications are finished
-        TOTAL_CLASSIFICATIONS = 8       # THIS NUMBER should be updated each time with the amount of ads
+        TOTAL_CLASSIFICATIONS = 160     # THIS NUMBER should be updated each time with the amount of ads
         if classifier.adCount >= TOTAL_CLASSIFICATIONS:
             send_email(classifier.email)
     
     return jsonify({'status': 'success', 
-                    'message': 'Classification submitted successfully',
+                    'message': 'Las clasificaciones han sido recibidas de forma satisfactoria, gracias por la participación, recibirán más información por correo electrónico.',
                     'redirect_url': url_for('despedida')})
 
 def send_email(email):
     subject = "Gracias por participar"
     sender = app.config['MAIL_DEFAULT_SENDER']
     recipients = [email]
-    body = "Gracias por ayudar en el proyecto"
+    body = "Gracias por ayudar en el proyecto, las clasificaciones se han recibido de forma exitosa, recibirán más información por correo electrónico"
 
     msg = Message(subject, sender=sender, recipients=recipients, body=body)
 
     try:
         mail.send(msg)
     except Exception as e:
-        app.logger.error(f"Fallo al enviar el correo: {e}")
+        app.logger.error(f"Fallo al enviar el correoo: {e}")
 
 
 @app.route('/submit_mail', methods=['POST'])
@@ -183,19 +183,19 @@ def register():
 def verify_email(token):
     serializer = Serializer(current_app.config['SECRET_KEY'], salt='email-verify')
     try:
-        # DEsearialize the token and extract email information
+        # Desearialize the token and extract email information
         email = serializer.loads(token, salt='email-verify', max_age=48*60*60) 
-
-        print("Email verificado de forma exitosa")
-
-        # Here we can implement maybe some logic to manage the age time def calculate_max_age(issued_time):
         
         temp_classifier = TempClassifier.query.filter_by(email=email).first_or_404()
 
-        # We have to revisit this, it will be better a queue to avoid replacement problems
-        # Transfer data from temp classifier to the actual classifier
-        ads_groups = ["0", "1", "2", "3", "4"]  # THIS list should also be updated with the actual count of ads displayed
-        assigned_group = random.choice(ads_groups)
+        # How many classifiers are on the database
+        number_classifiers = Classifier.query.count()
+
+        # How many groups are available
+        total_groups = 50        # This is neccesary to update with the actual number of groups to be classified
+        
+        # Assign a group based on the current number of classifiers
+        assigned_group = str(number_classifiers % total_groups)
 
         # We need to define the random order of the wfh options per user 0 or 1
         adoptions = round(random.random())
