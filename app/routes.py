@@ -107,7 +107,6 @@ def submit_classification():
         ad_id=data['ad_id'],
         classification=data['classification'],
         ease=data['ease_of_coding'],
-        workday=data['working_day'],
         timestamp=datetime.utcnow()
     )
 
@@ -121,7 +120,7 @@ def submit_classification():
         db.session.commit()
 
         # Check classifications are finished
-        TOTAL_CLASSIFICATIONS = 160     # THIS NUMBER should be updated each time with the amount of ads
+        TOTAL_CLASSIFICATIONS = 320     # THIS NUMBER should be updated each time with the amount of ads
         if classifier.adCount >= TOTAL_CLASSIFICATIONS:
             send_email(classifier.email)
     

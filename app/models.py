@@ -29,7 +29,6 @@ class Classification(db.Model):
     ad_id = db.Column(db.Integer, nullable=False)
     classification = db.Column(db.String(50), nullable=False)
     ease = db.Column(db.String(7), nullable=False)
-    workday = db.Column(db.String(10), nullable=False)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
     classifier = db.relationship('Classifier', backref=db.backref('classifications', lazy=True))
