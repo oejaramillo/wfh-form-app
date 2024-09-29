@@ -76,10 +76,19 @@ function displayNextJobAd() {
         // Get the radio buttons
         var radioButtons = `
             <label>
-                <input type="radio" name="classification" value="WFH">Se menciona trabajo desde el hogar
+                <input type="radio" name="classification" value="tot_remote">Trabajo totalmente remoto
             </label>
             <label>
-                <input type="radio" name="classification" value="Not WFH">No se menciona trabajo desde el hogar
+                <input type="radio" name="classification" value="temp_remote">Trabajo temporalmente remoto
+            </label>
+            <label>
+                <input type="radio" name="classification" value="part_remote">Trabajo parcialmente remoto
+            </label>
+            <label>
+                <input type="radio" name="classification" value="not_clear_remote">Trabajo remoto poco claro
+            </label>
+            <label>
+                <input type="radio" name="classification" value="not_remote">No es trabajo remoto
             </label>
             `;
 
@@ -89,10 +98,19 @@ function displayNextJobAd() {
         } else if (adoptions === 0) {
             optionsContainer.innerHTML = `
             <label>
-                <input type="radio" name="classification" value="Not WFH">No se menciona trabajo desde el hogar
+                <input type="radio" name="classification" value="tot_remote">Trabajo totalmente remoto
             </label>
             <label>
-                <input type="radio" name="classification" value="WFH">Se menciona trabajo desde el hogar
+                <input type="radio" name="classification" value="temp_remote">Trabajo temporalmente remoto
+            </label>
+            <label>
+                <input type="radio" name="classification" value="part_remote">Trabajo parcialmente remoto
+            </label>
+            <label>
+                <input type="radio" name="classification" value="not_clear_remote">Trabajo remoto poco claro
+            </label>
+            <label>
+                <input type="radio" name="classification" value="not_remote">No es trabajo remoto
             </label>
             `;
         }
@@ -115,9 +133,8 @@ jobAdForm.addEventListener("submit", function (e) {
 
     const classification = document.querySelector('input[name="classification"]:checked');
     const ease_of_coding = document.querySelector('input[name="ease_of_coding"]:checked');
-    const working_day = document.querySelector('input[name="working_day"]:checked');
 
-    if (!classification || !ease_of_coding || !working_day) {
+    if (!classification || !ease_of_coding) {
         alert("Por favor completa todas las preguntas.");
         return;
     }
@@ -129,7 +146,6 @@ jobAdForm.addEventListener("submit", function (e) {
         ad_id: currentAd.id,
         classification: classification.value,
         ease_of_coding: ease_of_coding.value,
-        working_day: working_day.value,
     };
 
     fetch('/submit_classification', {
