@@ -191,7 +191,7 @@ def verify_email(token):
         number_classifiers = Classifier.query.count()
 
         # How many groups are available
-        total_groups = 50        # This is neccesary to update with the actual number of groups to be classified
+        total_groups = 2        # This is neccesary to update with the actual number of groups to be classified
         
         # Assign a group based on the current number of classifiers
         assigned_group = str(number_classifiers % total_groups)
