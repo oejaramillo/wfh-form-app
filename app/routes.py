@@ -120,7 +120,7 @@ def submit_classification():
         db.session.commit()
 
         # Check classifications are finished
-        TOTAL_CLASSIFICATIONS = 320     # THIS NUMBER should be updated each time with the amount of ads
+        TOTAL_CLASSIFICATIONS = 342     # THIS NUMBER should be updated each time with the amount of ads
         if classifier.adCount >= TOTAL_CLASSIFICATIONS:
             send_email(classifier.email)
     
@@ -196,8 +196,8 @@ def verify_email(token):
         # Assign a group based on the current number of classifiers
         assigned_group = str(number_classifiers % total_groups)
 
-        # We need to define the random order of the wfh options per user 0 or 1
-        adoptions = round(random.random())
+        # We need to define the random order of the wfh options second round has 15 orders
+        adoptions = random.randint(1, 15)
 
         new_classifier = Classifier(
             age=int(temp_classifier.age),
