@@ -76,23 +76,320 @@ function displayNextJobAd() {
         // Get the radio buttons
         var radioButtons = `
             <label>
-                <input type="radio" name="classification" value="WFH">Se menciona trabajo desde el hogar
+                <input type="radio" name="classification" value="tot_remote">Trabajo totalmente remoto (Total)
             </label>
             <label>
-                <input type="radio" name="classification" value="Not WFH">No se menciona trabajo desde el hogar
+                <input type="radio" name="classification" value="temp_remote">Trabajo temporalmente remoto (Temporal)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="semi_remote">Trabajo remoto con algún horario presencial (Semi-remoto)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="semi_presence">Trabajo presencial con algún horario remoto (Semi-presencial)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="not_clear_remote">Trabajo remoto poco claro
+            </label>
+            <label>
+                <input type="radio" name="classification" value="not_remote">No es trabajo remoto
             </label>
             `;
 
         if (adoptions === 1) {
             optionsContainer.innerHTML = radioButtons; // Keep the order, WFH first
 
-        } else if (adoptions === 0) {
+        } else if (adoptions === 2) {       // Original inverted
             optionsContainer.innerHTML = `
             <label>
-                <input type="radio" name="classification" value="Not WFH">No se menciona trabajo desde el hogar
+                <input type="radio" name="classification" value="not_remote">No es trabajo remoto
             </label>
             <label>
-                <input type="radio" name="classification" value="WFH">Se menciona trabajo desde el hogar
+                <input type="radio" name="classification" value="not_clear_remote">Trabajo remoto poco claro
+            </label>
+            <label>
+                <input type="radio" name="classification" value="semi_presence">Trabajo presencial con algún horario remoto (Semi-presencial)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="semi_remote">Trabajo remoto con algún horario presencial (Semi-remoto)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="temp_remote">Trabajo temporalmente remoto (Temporal)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="tot_remote">Trabajo totalmente remoto (Total)
+            </label>
+            `;
+        } else if (adoptions === 3) {
+            optionsContainer.innerHTML = `
+            <label>
+                <input type="radio" name="classification" value="tot_remote">Trabajo totalmente remoto (Total)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="semi_remote">Trabajo remoto con algún horario presencial (Semi-remoto)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="semi_presence">Trabajo presencial con algún horario remoto (Semi-presencial)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="temp_remote">Trabajo temporalmente remoto (Temporal)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="not_clear_remote">Trabajo remoto poco claro
+            </label>
+            <label>
+                <input type="radio" name="classification" value="not_remote">No es trabajo remoto
+            </label>
+            `;
+        } else if (adoptions === 4) {
+            optionsContainer.innerHTML = `
+            <label>
+                <input type="radio" name="classification" value="not_remote">No es trabajo remoto
+            </label>
+            <label>
+                <input type="radio" name="classification" value="not_clear_remote">Trabajo remoto poco claro
+            </label>
+            <label>
+                <input type="radio" name="classification" value="temp_remote">Trabajo temporalmente remoto (Temporal)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="semi_presence">Trabajo presencial con algún horario remoto (Semi-presencial)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="semi_remote">Trabajo remoto con algún horario presencial (Semi-remoto)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="tot_remote">Trabajo totalmente remoto (Total)
+            </label>
+            `;
+        } else if (adoptions === 5) {
+            optionsContainer.innerHTML = `
+            <label>
+                <input type="radio" name="classification" value="semi_remote">Trabajo remoto con algún horario presencial (Semi-remoto)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="semi_presence">Trabajo presencial con algún horario remoto (Semi-presencial)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="temp_remote">Trabajo temporalmente remoto (Temporal)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="tot_remote">Trabajo totalmente remoto (Total)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="not_clear_remote">Trabajo remoto poco claro
+            </label>
+            <label>
+                <input type="radio" name="classification" value="not_remote">No es trabajo remoto
+            </label>
+            `;
+        } else if (adoptions === 6) {
+            optionsContainer.innerHTML = `
+            <label>
+                <input type="radio" name="classification" value="not_remote">No es trabajo remoto
+            </label>
+            <label>
+                <input type="radio" name="classification" value="not_clear_remote">Trabajo remoto poco claro
+            </label>
+            <label>
+                <input type="radio" name="classification" value="tot_remote">Trabajo totalmente remoto (Total)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="temp_remote">Trabajo temporalmente remoto (Temporal)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="semi_presence">Trabajo presencial con algún horario remoto (Semi-presencial)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="semi_remote">Trabajo remoto con algún horario presencial (Semi-remoto)
+            </label>
+            `;
+        } else if (adoptions === 7) {
+            optionsContainer.innerHTML = `
+            <label>
+                <input type="radio" name="classification" value="not_clear_remote">Trabajo remoto poco claro
+            </label>
+            <label>
+                <input type="radio" name="classification" value="tot_remote">Trabajo totalmente remoto (Total)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="semi_remote">Trabajo remoto con algún horario presencial (Semi-remoto)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="semi_presence">Trabajo presencial con algún horario remoto (Semi-presencial)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="temp_remote">Trabajo temporalmente remoto (Temporal)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="not_remote">No es trabajo remoto
+            </label>
+            `;
+        } else if (adoptions === 8) {
+            optionsContainer.innerHTML = `
+            <label>
+                <input type="radio" name="classification" value="not_remote">No es trabajo remoto
+            </label>
+            <label>
+                <input type="radio" name="classification" value="temp_remote">Trabajo temporalmente remoto (Temporal)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="semi_presence">Trabajo presencial con algún horario remoto (Semi-presencial)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="semi_remote">Trabajo remoto con algún horario presencial (Semi-remoto)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="tot_remote">Trabajo totalmente remoto (Total)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="not_clear_remote">Trabajo remoto poco claro
+            </label>
+            `;
+        } else if (adoptions === 9) {
+            optionsContainer.innerHTML = `
+            <label>
+                <input type="radio" name="classification" value="semi_remote">Trabajo remoto con algún horario presencial (Semi-remoto)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="temp_remote">Trabajo temporalmente remoto (Temporal)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="tot_remote">Trabajo totalmente remoto (Total)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="not_remote">No es trabajo remoto
+            </label>
+            <label>
+                <input type="radio" name="classification" value="semi_presence">Trabajo presencial con algún horario remoto (Semi-presencial)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="not_clear_remote">Trabajo remoto poco claro
+            </label>
+            `;
+        } else if (adoptions === 10) {
+            optionsContainer.innerHTML = `
+            <label>
+                <input type="radio" name="classification" value="not_clear_remote">Trabajo remoto poco claro
+            </label>
+            <label>
+                <input type="radio" name="classification" value="semi_presence">Trabajo presencial con algún horario remoto (Semi-presencial)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="not_remote">No es trabajo remoto
+            </label>
+            <label>
+                <input type="radio" name="classification" value="tot_remote">Trabajo totalmente remoto (Total)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="temp_remote">Trabajo temporalmente remoto (Temporal)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="semi_remote">Trabajo remoto con algún horario presencial (Semi-remoto)
+            </label>            
+            `;
+        } else if (adoptions === 11) {
+            optionsContainer.innerHTML = `
+            <label>
+                <input type="radio" name="classification" value="semi_remote">Trabajo remoto con algún horario presencial (Semi-remoto)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="semi_presence">Trabajo presencial con algún horario remoto (Semi-presencial)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="temp_remote">Trabajo temporalmente remoto (Temporal)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="tot_remote">Trabajo totalmente remoto (Total)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="not_remote">No es trabajo remoto
+            </label>
+            <label>
+                <input type="radio" name="classification" value="not_clear_remote">Trabajo remoto poco claro
+            </label>
+            `;
+        } else if (adoptions === 12) {
+            optionsContainer.innerHTML = `
+            <label>
+                <input type="radio" name="classification" value="not_clear_remote">Trabajo remoto poco claro
+            </label>
+            <label>
+                <input type="radio" name="classification" value="not_remote">No es trabajo remoto
+            </label>
+            <label>
+                <input type="radio" name="classification" value="tot_remote">Trabajo totalmente remoto (Total)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="temp_remote">Trabajo temporalmente remoto (Temporal)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="semi_presence">Trabajo presencial con algún horario remoto (Semi-presencial)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="semi_remote">Trabajo remoto con algún horario presencial (Semi-remoto)
+            </label>
+            `;
+        } else if (adoptions === 13) {
+            optionsContainer.innerHTML = `
+            <label>
+                <input type="radio" name="classification" value="temp_remote">Trabajo temporalmente remoto (Temporal)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="tot_remote">Trabajo totalmente remoto (Total)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="not_remote">No es trabajo remoto
+            </label>
+            <label>
+                <input type="radio" name="classification" value="not_clear_remote">Trabajo remoto poco claro
+            </label>
+            <label>
+                <input type="radio" name="classification" value="semi_remote">Trabajo remoto con algún horario presencial (Semi-remoto)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="semi_presence">Trabajo presencial con algún horario remoto (Semi-presencial)
+            </label>
+            `;
+        } else if (adoptions === 14) {
+            optionsContainer.innerHTML = `
+            <label>
+                <input type="radio" name="classification" value="semi_presence">Trabajo presencial con algún horario remoto (Semi-presencial)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="semi_remote">Trabajo remoto con algún horario presencial (Semi-remoto)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="not_clear_remote">Trabajo remoto poco claro
+            </label>
+            <label>
+                <input type="radio" name="classification" value="not_remote">No es trabajo remoto
+            </label>
+            <label>
+                <input type="radio" name="classification" value="tot_remote">Trabajo totalmente remoto (Total)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="temp_remote">Trabajo temporalmente remoto (Temporal)
+            </label>
+            `;
+        } else if (adoptions === 15) {
+            optionsContainer.innerHTML = `
+            <label>
+                <input type="radio" name="classification" value="not_remote">No es trabajo remoto
+            </label>
+            <label>
+                <input type="radio" name="classification" value="not_clear_remote">Trabajo remoto poco claro
+            </label>
+            <label>
+                <input type="radio" name="classification" value="temp_remote">Trabajo temporalmente remoto (Temporal)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="tot_remote">Trabajo totalmente remoto (Total)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="semi_remote">Trabajo remoto con algún horario presencial (Semi-remoto)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="semi_presence">Trabajo presencial con algún horario remoto (Semi-presencial)
             </label>
             `;
         }
@@ -115,9 +412,8 @@ jobAdForm.addEventListener("submit", function (e) {
 
     const classification = document.querySelector('input[name="classification"]:checked');
     const ease_of_coding = document.querySelector('input[name="ease_of_coding"]:checked');
-    const working_day = document.querySelector('input[name="working_day"]:checked');
 
-    if (!classification || !ease_of_coding || !working_day) {
+    if (!classification || !ease_of_coding) {
         alert("Por favor completa todas las preguntas.");
         return;
     }
@@ -129,7 +425,6 @@ jobAdForm.addEventListener("submit", function (e) {
         ad_id: currentAd.id,
         classification: classification.value,
         ease_of_coding: ease_of_coding.value,
-        working_day: working_day.value,
     };
 
     fetch('/submit_classification', {

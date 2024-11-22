@@ -74,7 +74,7 @@ def get_ads():
         ad_count = classifier.adCount
         ad_options = classifier.adoptions
 
-        with open('jobads5.json', 'r') as archive:
+        with open('jobads6.json', 'r') as archive:
             all_ads = json.load(archive)
 
         # Create a list of objects with id and aviso
@@ -107,7 +107,6 @@ def submit_classification():
         ad_id=data['ad_id'],
         classification=data['classification'],
         ease=data['ease_of_coding'],
-        workday=data['working_day'],
         timestamp=datetime.utcnow()
     )
 
@@ -121,7 +120,7 @@ def submit_classification():
         db.session.commit()
 
         # Check classifications are finished
-        TOTAL_CLASSIFICATIONS = 160     # THIS NUMBER should be updated each time with the amount of ads
+        TOTAL_CLASSIFICATIONS = 342     # THIS NUMBER should be updated each time with the amount of ads
         if classifier.adCount >= TOTAL_CLASSIFICATIONS:
             send_email(classifier.email)
     
@@ -192,13 +191,13 @@ def verify_email(token):
         number_classifiers = Classifier.query.count()
 
         # How many groups are available
-        total_groups = 50        # This is neccesary to update with the actual number of groups to be classified
+        total_groups = 2        # This is neccesary to update with the actual number of groups to be classified
         
         # Assign a group based on the current number of classifiers
         assigned_group = str(number_classifiers % total_groups)
 
-        # We need to define the random order of the wfh options per user 0 or 1
-        adoptions = round(random.random())
+        # We need to define the random order of the wfh options second round has 15 orders
+        adoptions = int(number_classifiers % 15)
 
         new_classifier = Classifier(
             age=int(temp_classifier.age),

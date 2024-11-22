@@ -19,10 +19,22 @@
         <div id="jobAdContainer"></div>
         <div id="options">
             <label>
-                <input type="radio" name="classification" value="WFH">Se menciona trabajo desde el hogar
+                <input type="radio" name="classification" value="tot_remote">Trabajo totalmente remoto (Total)
             </label>
             <label>
-                <input type="radio" name="classification" value="Not WFH">No se menciona trabajo desde el hogar
+                <input type="radio" name="classification" value="temp_remote">Trabajo temporalmente remoto (Temporal)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="semi_remote">Trabajo remoto con algún horario presencial (Semi-remoto)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="semi_presence">Trabajo presencial con algún horario remoto (Semi-presencial)
+            </label>
+            <label>
+                <input type="radio" name="classification" value="not_clear_remote">Trabajo remoto poco claro
+            </label>
+            <label>
+                <input type="radio" name="classification" value="not_remote">No es trabajo remoto
             </label>
         </div>
         <div id="ease_of_coding">
@@ -34,17 +46,6 @@
             </label>
             <label>
                 <input type="radio" name="ease_of_coding" value="hard">Dificil
-            </label>
-        </div>
-        <div id="working_day">
-            <label>
-                <input type="radio" name="working_day" value="full">Jornada Completa
-            </label>
-            <label>
-                <input type="radio" name="working_day" value="part">Jornada Parcial
-            </label>
-            <label>
-                <input type="radio" name="working_day" value="not clear">No está claro
             </label>
         </div>
         <!--Submit Button-->
