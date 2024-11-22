@@ -74,7 +74,7 @@ def get_ads():
         ad_count = classifier.adCount
         ad_options = classifier.adoptions
 
-        with open('jobads5.json', 'r') as archive:
+        with open('jobads6.json', 'r') as archive:
             all_ads = json.load(archive)
 
         # Create a list of objects with id and aviso
