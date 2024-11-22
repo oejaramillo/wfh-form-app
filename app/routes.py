@@ -191,13 +191,13 @@ def verify_email(token):
         number_classifiers = Classifier.query.count()
 
         # How many groups are available
-        total_groups = 2        # This is neccesary to update with the actual number of groups to be classified
+        total_groups = 15        # This is neccesary to update with the actual number of groups to be classified
         
         # Assign a group based on the current number of classifiers
         assigned_group = str(number_classifiers % total_groups)
 
         # We need to define the random order of the wfh options second round has 15 orders
-        adoptions = int(number_classifiers % 15)
+        adoptions = int(number_classifiers % total_groups)
 
         new_classifier = Classifier(
             age=int(temp_classifier.age),
