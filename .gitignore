@@ -14,3 +14,5 @@ deploy
 amb
 env_var.txt
 amb2
+set_env.sh
+

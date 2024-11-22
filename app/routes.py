@@ -139,7 +139,7 @@ def send_email(email):
     try:
         mail.send(msg)
     except Exception as e:
-        app.logger.error(f"Fallo al enviar el correo: {e}")
+        app.logger.error(f"Fallo al enviar el correoo: {e}")
 
 
 @app.route('/submit_mail', methods=['POST'])
@@ -168,7 +168,7 @@ def register():
         msg.body = f'El link de verificacion es: {verify_url}'
         try:
             mail.send(msg)
-            print(msg)
+            print("Email enviado con éxito")
         except Exception as e:
             print(f"Fallo al enviar correo: {e}")
     else:
@@ -215,9 +215,10 @@ def verify_email(token):
         db.session.delete(temp_classifier)
         db.session.commit()
 
-
+        print("We are here")
         session['classifier_id'] = new_classifier.id  # Store the new classifier's ID in the session
         # Podemos redirigir
+        
         return redirect(url_for('wfh_classification'))
     
     except BadSignature:
