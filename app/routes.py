@@ -197,7 +197,7 @@ def verify_email(token):
         assigned_group = str(number_classifiers % total_groups)
 
         # We need to define the random order of the wfh options second round has 15 orders
-        adoptions = random.randint(1, 15)
+        adoptions = int(number_classifiers % 15)
 
         new_classifier = Classifier(
             age=int(temp_classifier.age),
